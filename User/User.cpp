@@ -15,7 +15,7 @@ string User::getId() {
     return this->id;
 }
 
-string User::getUsernane() {
+string User::getUsername() {
     return this->username;
 }
 
@@ -24,11 +24,17 @@ string User::getPassword() {
 }
 
 void User::setUsername(string username) {
-    this->username = move(username);
+    this->username = std::move(username);
 }
 
 void User::setPassword(string password) {
-    this->password = move(password);
+    this->password = std::move(password);
 }
 
-
+void User::setAuthority() {
+    this->authority = "USER";
+}
+void User::setId(basic_string<char> basicString) {
+    //TODO change to generated unique ID/UUID/GUID
+    this->id = 1;
+}

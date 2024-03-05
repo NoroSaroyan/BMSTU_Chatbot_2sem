@@ -8,7 +8,7 @@
 
 class User {
 public:
-    string getUsernane();
+    string getUsername();
 
     string getPassword();
 
@@ -19,12 +19,19 @@ public:
     void setUsername(string username);
 
     void setPassword(string password);
+
+    void setAuthority();
+
+    void setId(basic_string<char> basicString);
+
+    string toString();
 private:
     string username;
     string password;
     string authority;
     string id;
 };
+
 
 
 #endif //USER_H

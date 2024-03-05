@@ -1,5 +1,5 @@
-#include "menu/Menu.h"
-#include "menu/MenuItem.h"
+#include "Menu/Menu.h"
+#include "Menu/MenuItem.h"
 
 using namespace std;
 
