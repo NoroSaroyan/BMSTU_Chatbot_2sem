@@ -1,15 +1,8 @@
-#include "User.h"
-#include "../Utils/Utilities.cpp"
-#include "fstream"
-#include "iostream"
-//#include <boost/uuid/uuid.hpp>
-//#include <boost/uuid/uuid_generators.hpp>
-//#include <boost/uuid/uuid_io.hpp>
+#include "UserServices.h"
 
 using namespace std;
 
-
-void registerAccount() {
+void UserServices::registerAccount() {
     User temp;
     string username, password;
 
@@ -45,20 +38,16 @@ void registerAccount() {
     ofstream out("users.txt");
     if (out.is_open()) {
         out << temp.toString();
-    } else{
-        cout<<"Something went wrong"<<endl;
+    } else {
+        cout << "Something went wrong" << endl;
     }
 }
 
-void login(string username, string password){
+void UserServices::login(string username, string password) {
     ifstream file("users.txt", ios_base::in);
-    if(file.is_open()){
-        while(!file.eof()){
+    if (file.is_open()) {
+        while (!file.eof()) {
 
         }
     }
 }
-
-
-
-

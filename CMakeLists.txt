@@ -14,5 +14,6 @@ add_executable(BMSTU_Chatbot_2sem main.cpp
         Encoder.cpp
         User/UserServices.cpp
         Utils/Utilities.cpp
-        Utils/Mapper.cpp)
+        Utils/Mapper.cpp
+        User/UserServices.h)
 

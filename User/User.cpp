@@ -35,6 +35,5 @@ void User::setAuthority() {
     this->authority = "USER";
 }
 void User::setId(basic_string<char> basicString) {
-    //TODO change to generated unique ID/UUID/GUID
     this->id = 1;
 }
