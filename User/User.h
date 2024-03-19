@@ -24,7 +24,6 @@ public:
 
     void setId(basic_string<char> basicString);
 
-    string toString();
 private:
     string username;
     string password;

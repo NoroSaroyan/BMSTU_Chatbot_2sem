@@ -1,13 +1,20 @@
-#include "../Headers.h"
-#include "regex"
 using namespace std;
 
-string emailRegex = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
-string passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$";
+#include "Utilities.h"
 
-bool checkEmail(const string& email){
-    return regex_match(email, regex(emailRegex));
+bool Utilities::checkEmail(const std::string &email) {
+    return regex_match(email, regex(this->getEmailRegex()));
 }
-bool checkPassword(const string& password){
-    return regex_match(password, regex(passwordRegex));
+
+bool Utilities::checkPassword(const std::string &password) {
+    return true;
+//    return regex_match(password, regex(this->getPasswordRegex()));
+}
+
+const string &Utilities::getEmailRegex() const {
+    return emailRegex;
+}
+
+const string &Utilities::getPasswordRegex() const {
+    return passwordRegex;
 }

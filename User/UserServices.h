@@ -6,12 +6,16 @@
 #define BMSTU_CHATBOT_2SEM_USERSERVICES_H
 
 #include "User.h"
-#include "../Utils/Utilities.cpp"
+#include "../Utils/Utilities.h"
+#include "../Utils/Mapper.h"
 #include "fstream"
 #include "iostream"
 
 class UserServices {
+public :
     void registerAccount();
+
     void login(string username, string password);
-    };
+};
+
 #endif //BMSTU_CHATBOT_2SEM_USERSERVICES_H

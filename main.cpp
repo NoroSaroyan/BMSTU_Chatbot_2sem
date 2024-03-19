@@ -1,10 +1,19 @@
 #include "Menu/Menu.h"
 #include "Menu/MenuItem.h"
+#include "User/UserServices.h"
 
 using namespace std;
 
 #pragma region функции-заглушки
 
+int request();
+int loginFunction();
+int registration();
+int questions();
+int dataStoringGuide();
+int privacyPolicy();
+int main();
+UserServices service;
 int request() {
     int result = 1;
     int number, power;
@@ -21,12 +30,15 @@ int request() {
 
 int loginFunction() {
     cout <<
-            "This will be your login dialog page... \nWe are sorry, you can't use this function right now, we're trying to ensure \nthat your login information is well protected.   \n\n";
+            "This will be your login dialog page... "
+            "\nWe are sorry, you can't use this function right now, we're trying to ensure "
+            "\nthat your login information is well protected.   \n\n";
     return 1;
 }
 
 int registration() {
-    cout << "This is about to be the best registration dialog you've ever seen, \njust wait a little...\n\n";
+    cout << "REGISTRATION";
+    service.registerAccount();
     return 2;
 }
 
@@ -37,13 +49,17 @@ int questions() {
 
 int dataStoringGuide() {
     cout <<
-            "We take your safety close to heart, \nso, we came up with the idea of multilayer encoding, \nto ensure your private information and \n4search history can't be read by anyone except you.\n\n";
+            "We take your safety close to heart, "
+            "\nso, we came up with the idea of multilayer encoding, "
+            "\nto ensure your private information and "
+            "\n4search history can't be read by anyone except you.\n\n";
     return 4;
 }
 
 int privacyPolicy() {
     cout <<
-            "Privacy policy is for telling you about basic rules and agreements between me and you.\n we'll get to this in a bit. \n\n";
+            "Privacy policy is for telling you about basic rules and agreements between me and you."
+            "\n we'll get to this in a bit. \n\n";
     return 5;
 }
 #pragma endregion
@@ -52,6 +68,7 @@ const int ITEMS_NUMBER = 6;
 
 
 int main() {
+    UserServices service;
     MenuItem items[ITEMS_NUMBER]{
         MenuItem{"Request", request}, {"Login", loginFunction}, MenuItem{"Register", registration},
         MenuItem{"Catalog", questions},

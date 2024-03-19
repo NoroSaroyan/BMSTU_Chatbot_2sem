@@ -34,6 +34,7 @@ void User::setPassword(string password) {
 void User::setAuthority() {
     this->authority = "USER";
 }
+
 void User::setId(basic_string<char> basicString) {
     this->id = 1;
 }

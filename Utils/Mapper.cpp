@@ -1,13 +1,14 @@
-#include "../User/User.h"
+#include "Mapper.h"
 
-string mapToString(User user) {
+string Mapper::mapToString(User user) {
     return
             user.getId() + " " +
             user.getUsername() + " " +
             user.getPassword() + " " +
             user.getAuthority();
 }
-User mapToObject(string line){
+
+User Mapper::mapToObject(std::string line) {
     vector<string> values = {};
     for (int i = 0; i < line.length(); ++i) {
         string data;
