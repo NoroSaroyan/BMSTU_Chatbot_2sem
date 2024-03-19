@@ -31,10 +31,10 @@ void User::setPassword(string password) {
     this->password = std::move(password);
 }
 
-void User::setAuthority() {
-    this->authority = "USER";
+void User::setAuthority(string authority) {
+    this->authority = authority;
 }
 
-void User::setId(basic_string<char> basicString) {
-    this->id = 1;
+void User::setId(string id) {
+    this->id = id;
 }

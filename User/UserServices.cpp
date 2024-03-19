@@ -9,6 +9,8 @@ Mapper mapper;
 void UserServices::registerAccount() {
     User temp;
     string username, password;
+    cout << endl;
+
     cout << "Enter email" << endl;
     cin >> username;
     cout << endl;
@@ -18,6 +20,7 @@ void UserServices::registerAccount() {
         cout << endl;
     }
     temp.setUsername(username);
+
     cout << "Enter password" << endl;
     cin >> password;
     cout << endl;
@@ -26,7 +29,8 @@ void UserServices::registerAccount() {
         cin >> password;
         cout << endl;
     }
-    ifstream file("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/Database/users.txt");
+
+    ifstream file("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/Database/users.txt", ios::in);
     string line;
     int count = 0;
 
@@ -34,26 +38,44 @@ void UserServices::registerAccount() {
         while (getline(file, line)) {
             count++;
         }
-
         file.close();
     }
+
     temp.setPassword(password);
-    temp.setAuthority();
+    temp.setAuthority("USER");
     temp.setId(to_string(count + 1));
 
-    ofstream out("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/Database/users.txt");
+    ofstream out("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/Database/users.txt", ios::app);
     if (out.is_open()) {
-        out << mapper.mapToString(temp);
+        out << mapper.mapToString(temp) << "\n";;
     } else {
         cout << "Something went wrong" << endl;
     }
 }
 
-void UserServices::login(string username, string password) {
-    ifstream file("users.txt", ios_base::in);
-    if (file.is_open()) {
-        while (!file.eof()) {
+void UserServices::login() {
+    string username, password;
+    cout << "Enter email" << endl;
+    cin >> username;
+    cout << endl;
+    cout << "Enter password" << endl;
+    cin >> password;
 
+    ifstream file("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/Database/users.txt", ios::in);
+    if (!file.is_open()) {
+        cout << "Internal server error, couldn't access database" << endl;
+    }
+
+    string current;
+
+    while (getline(file, current)) {
+        User currentUser = mapper.mapToObject(current);
+        if (currentUser.getUsername() == username && currentUser.getPassword() == password) {
+            cout << "Logged in as: " + currentUser.getUsername() << endl;
+            return;
         }
     }
+
+    file.close();
+    cout << "User not found, try again" << endl;
 }

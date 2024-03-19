@@ -29,15 +29,12 @@ int request() {
 }
 
 int loginFunction() {
-    cout <<
-            "This will be your login dialog page... "
-            "\nWe are sorry, you can't use this function right now, we're trying to ensure "
-            "\nthat your login information is well protected.   \n\n";
+    service.login();
     return 1;
 }
 
 int registration() {
-    cout << "REGISTRATION";
+    cout << "REGISTRATION"<<endl;
     service.registerAccount();
     return 2;
 }

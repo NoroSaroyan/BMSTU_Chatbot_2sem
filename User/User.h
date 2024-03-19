@@ -20,7 +20,7 @@ public:
 
     void setPassword(string password);
 
-    void setAuthority();
+    void setAuthority(string authority);
 
     void setId(basic_string<char> basicString);
 

@@ -15,7 +15,7 @@ class UserServices {
 public :
     void registerAccount();
 
-    void login(string username, string password);
+    void login();
 };
 
 #endif //BMSTU_CHATBOT_2SEM_USERSERVICES_H

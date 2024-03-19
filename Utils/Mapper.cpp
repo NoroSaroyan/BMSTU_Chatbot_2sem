@@ -9,16 +9,27 @@ string Mapper::mapToString(User user) {
 }
 
 User Mapper::mapToObject(std::string line) {
-    vector<string> values = {};
-    for (int i = 0; i < line.length(); ++i) {
-        string data;
-        if(line[i] != ' '){
-            data+=line[i];
-        }else{
-            values.at(i) = data;
+    vector<std::string> values;
+    string data;
+
+    for (char c : line) {
+        if (c != ' ') {
+            data += c;
+        } else {
+            values.push_back(data);
             data = "";
         }
     }
+
+    values.push_back(data);
+
     User temp;
-    temp.setId(values.at(0));
+    if (values.size() >= 4) {
+        temp.setId(values[0]);
+        temp.setUsername(values[1]);
+        temp.setPassword(values[2]);
+        temp.setAuthority(values[3]);
+    }
+
+    return temp;
 }
