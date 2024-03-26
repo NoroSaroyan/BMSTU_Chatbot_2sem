@@ -6,6 +6,10 @@ using namespace std;
 
 #pragma region функции-заглушки
 
+
+User global;
+
+
 int request();
 int loginFunction();
 int registration();
@@ -29,7 +33,10 @@ int request() {
 }
 
 int loginFunction() {
-    service.login();
+    User temp = service.login();
+    if(temp.getUsername() != ""){
+
+    }
     return 1;
 }
 

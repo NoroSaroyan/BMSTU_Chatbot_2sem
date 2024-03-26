@@ -53,7 +53,8 @@ void UserServices::registerAccount() {
     }
 }
 
-void UserServices::login() {
+User UserServices::login() {
+    User currentUser;
     string username, password;
     cout << "Enter email" << endl;
     cin >> username;
@@ -69,13 +70,12 @@ void UserServices::login() {
     string current;
 
     while (getline(file, current)) {
-        User currentUser = mapper.mapToObject(current);
+        currentUser = mapper.mapToObject(current);
         if (currentUser.getUsername() == username && currentUser.getPassword() == password) {
-            cout << "Logged in as: " + currentUser.getUsername() << endl;
-            return;
+            return currentUser;
         }
     }
-
     file.close();
     cout << "User not found, try again" << endl;
+    return currentUser;
 }

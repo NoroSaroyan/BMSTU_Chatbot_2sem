@@ -1,7 +1,3 @@
-//
-// Created by Norik Saroyan on 20.02.24.
-//
-
 #include "Menu.h"
 #include "../Headers.h"
 

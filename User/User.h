@@ -1,6 +1,3 @@
-//
-// Created by Norik Saroyan on 01.03.24.
-//
 #ifndef USER_H
 #define USER_H
 

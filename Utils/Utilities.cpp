@@ -19,10 +19,10 @@ const string &Utilities::getPasswordRegex() const {
 }
 
 const string &Utilities::generateNumericID() const {
-    std::string id;
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> distribution(0, 9);
+    string id;
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<int> distribution(0, 9);
 
     for (int i = 0; i < 8; ++i) {
         id += std::to_string(distribution(gen));
