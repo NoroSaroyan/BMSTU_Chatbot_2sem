@@ -1,6 +1,4 @@
-//
-// Created by Norik Saroyan on 20.02.24.
-//
+
 
 #ifndef HEADERS_H
 #define HEADERS_H

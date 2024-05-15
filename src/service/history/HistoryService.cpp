@@ -1,21 +1,15 @@
-//
-// Created by Norik Saroyan on 15.05.24.
-//
-
 #include "HistoryService.h"
 
-string HistoryService::createRecord(string userId, QA qa, tm time) {
-    QAMapper mapper;
-    string result;
-    result += userId+" | ";
-    result += mapper.mapToString(qa) + " | ";
-    char buffer[20]; // Buffer to hold the formatted time string
-    std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", time);
-
-    result += time + " | ";
-    return result;
+string HistoryService::createRecord(string userId, QA qa, time_t time) {
+    History temp(userId, qa, time);
+    auto result = historyMapper.mapToString(temp);
+    postRecord(userId, result);
 }
 
 void HistoryService::postRecord(string userId, string record) {
-
+    ofstream out(pathPrefix + userId);
+    if (!out.is_open()) {
+        cerr << "Database error";
+    }
+    out << record << endl;
 }

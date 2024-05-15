@@ -1,6 +1,4 @@
-//
-// Created by Norik Saroyan on 15.05.24.
-//
+
 
 #ifndef BMSTU_CHATBOT_2SEM_HISTORY_H
 #define BMSTU_CHATBOT_2SEM_HISTORY_H

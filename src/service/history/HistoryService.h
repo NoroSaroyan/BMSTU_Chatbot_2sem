@@ -9,12 +9,14 @@
 #include "../qa/QAService.h"
 #include "../user/UserService.h"
 #include "fstream"
+#include "../../helpers/mappers/history/HistoryMapper.h"
 
 class HistoryService {
 private:
     string pathPrefix = "/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/static/Database/history";
+    HistoryMapper historyMapper;
 public:
-    string createRecord(string userId, QA qa, tm time);
+    string createRecord(string userId, QA qa, time_t time);
 
     void postRecord(string userID, string record);
 
