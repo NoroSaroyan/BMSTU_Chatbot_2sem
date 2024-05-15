@@ -2,8 +2,8 @@
 // Created by Norik Saroyan on 05.03.24.
 //
 
-#ifndef BMSTU_CHATBOT_2SEM_USERSERVICES_H
-#define BMSTU_CHATBOT_2SEM_USERSERVICES_H
+#ifndef BMSTU_CHATBOT_2SEM_USERSERVICE_H
+#define BMSTU_CHATBOT_2SEM_USERSERVICE_H
 
 #include "../../Entity/User/User.h"
 #include "../../Utils/Utilities.h"
@@ -12,7 +12,7 @@
 #include "iostream"
 #include "../../AuthManager.h"
 
-class UserServices {
+class UserService {
 private:
     Utilities utils;
     UserMapper mapper;
@@ -22,4 +22,4 @@ public :
     optional<User> login(string username, string password);
 };
 
-#endif //BMSTU_CHATBOT_2SEM_USERSERVICES_H
+#endif //BMSTU_CHATBOT_2SEM_USERSERVICE_H

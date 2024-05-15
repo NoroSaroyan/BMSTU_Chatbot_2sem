@@ -21,8 +21,8 @@ add_executable(BMSTU_Chatbot_2sem
         Entity/user/User.h
         Entity/user/User.cpp
         Encoder.cpp
-        service/user/UserServices.cpp
-        service/user/UserServices.h
+        service/user/UserService.cpp
+        service/user/UserService.h
         Utils/Utilities.cpp
         Utils/user/UserMapper.cpp
         Utils/Utilities.h
@@ -35,6 +35,8 @@ add_executable(BMSTU_Chatbot_2sem
         Utils/qa/QAMapper.h
         service/qa/QAService.cpp
         service/qa/QAService.h
+        service/history/HistoryService.cpp
+        service/history/HistoryService.h
 )
 
 # Link against the Boost libraries

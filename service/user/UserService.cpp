@@ -1,10 +1,10 @@
-#include "UserServices.h"
+#include "UserService.h"
 #include <iostream>
 #include <fstream>
 
 using namespace std;
 
-void UserServices::registerAccount(string username, string password) {
+void UserService::registerAccount(string username, string password) {
     User temp;
     while (!utils.checkEmail(username)) {
         cout << "Email is invalid, try again: ";
@@ -37,7 +37,7 @@ void UserServices::registerAccount(string username, string password) {
     }
 }
 
-optional<User> UserServices::login(string username, string password) {
+optional<User> UserService::login(string username, string password) {
     User currentUser;
 
     ifstream file("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/Database/users.txt", ios::in);

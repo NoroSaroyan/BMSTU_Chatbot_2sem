@@ -1,8 +1,3 @@
-//
-// Created by Norik Saroyan on 01.03.24.
-//
-
-
 #include "User.h"
 
 #include <utility>

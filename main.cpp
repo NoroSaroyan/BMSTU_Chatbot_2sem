@@ -1,6 +1,7 @@
 #include "Menu/Menu.h"
 #include "Menu/MenuItem.h"
-#include "service/user/UserServices.h"
+#include "service/user/UserService.h"
+#include "service/qa/QAService.h"
 #include "AuthManager.h"
 #include "Entity/qa/QA.h"
 
@@ -8,6 +9,7 @@ using namespace std;
 
 void authorizeUser(User user);
 
+[[maybe_unused]]
 void logoutUser();
 
 #pragma region функции-заглушки
@@ -26,9 +28,13 @@ int privacyPolicy();
 
 int main();
 
-UserServices service;
+UserService service;
 
 int request() {
+    AuthManager &authManager = AuthManager::getInstance();
+    auto temp = authManager.getCurrentUser();
+    cout << temp->getId();
+
     int result = 1;
     int number, power;
     cout << "Введите число" << endl;
@@ -53,10 +59,7 @@ int loginFunction() {
     cin >> password;
     cout << endl;
 
-    optional<User> temp = service.login(username, password);
-    if (temp.has_value()) {
-        authorizeUser(temp.value());
-    }
+    if (auto user = service.login(username, password); user.has_value()) authorizeUser(user.value());
     return 1;
 }
 
@@ -77,7 +80,10 @@ int registration() {
 }
 
 int questions() {
-    vector<QA> list;
+
+    QAService qaService;
+    optional<vector<QA>> opt = qaService.getAll();
+    vector<QA> list = opt.has_value() ? opt.value() : std::vector<QA>();
     int idx = 1;
     for (auto qa: list) {
         cout << idx << ". " << qa.getQuestion() << endl;
@@ -88,6 +94,10 @@ int questions() {
 }
 
 int dataStoringGuide() {
+    AuthManager &authManager = AuthManager::getInstance();
+    auto temp = authManager.getCurrentUser();
+    cout << temp->getId();
+
     cout <<
          "We take your safety close to heart, "
          "\nso, we came up with the idea of multilayer encoding, "
@@ -97,6 +107,10 @@ int dataStoringGuide() {
 }
 
 int privacyPolicy() {
+    AuthManager &authManager = AuthManager::getInstance();
+    auto temp = authManager.getCurrentUser();
+    cout << temp->getId();
+
     cout <<
          "Privacy policy is for telling you about basic rules and agreements between me and you."
          "\n we'll get to this in a bit. \n\n";
@@ -108,7 +122,6 @@ int privacyPolicy() {
 void authorizeUser(User user) {
     AuthManager &authManager = AuthManager::getInstance();
     if (authManager.login(user.getUsername(), user.getPassword(), user.getAuthority())) {
-
         std::shared_ptr<User> user = authManager.getCurrentUser();
         std::cout << "User " << user->getUsername() << " has logged in with ID " << user->getId() << std::endl;
     } else {
