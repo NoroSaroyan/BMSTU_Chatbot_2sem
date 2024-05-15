@@ -13,30 +13,36 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 # Add the executable with all source files and headers
 add_executable(BMSTU_Chatbot_2sem
-        main.cpp
-        Menu/Menu.h
-        Menu/MenuItem.h
-        Menu/MenuItem.cpp
-        Menu/Menu.cpp
-        Entity/user/User.h
-        Entity/user/User.cpp
-        Encoder.cpp
-        service/user/UserService.cpp
-        service/user/UserService.h
-        Utils/Utilities.cpp
-        Utils/user/UserMapper.cpp
-        Utils/Utilities.h
-        Utils/user/UserMapper.h
-        Entity/qa/QA.cpp
-        Entity/qa/QA.h
-        AuthManager.cpp
-        AuthManager.h
-        Utils/qa/QAMapper.cpp
-        Utils/qa/QAMapper.h
-        service/qa/QAService.cpp
-        service/qa/QAService.h
-        service/history/HistoryService.cpp
-        service/history/HistoryService.h
+        src/main.cpp
+        src/Menu/Menu.h
+        src/Menu/MenuItem.h
+        src/Menu/MenuItem.cpp
+        src/Menu/Menu.cpp
+        src/Entity/user/User.h
+        src/Entity/user/User.cpp
+        src/helpers/encoder/Encoder.cpp
+        src/service/user/UserService.cpp
+        src/service/user/UserService.h
+        src/helpers/utils/Utilities.cpp
+        src/helpers/mappers/user/UserMapper.cpp
+        src/helpers/utils/Utilities.h
+        src/helpers/mappers/user/UserMapper.h
+        src/Entity/qa/QA.cpp
+        src/Entity/qa/QA.h
+        src/auth/AuthManager.cpp
+        src/auth/AuthManager.h
+        src/helpers/mappers/qa/QAMapper.cpp
+        src/helpers/mappers/qa/QAMapper.h
+        src/service/qa/QAService.cpp
+        src/service/qa/QAService.h
+        src/service/history/HistoryService.cpp
+        src/service/history/HistoryService.h
+        src/Entity/history/History.cpp
+        src/Entity/history/History.h
+        src/helpers/mappers/history/HistoryMapper.cpp
+        src/helpers/mappers/history/HistoryMapper.h
+        src/customized/GenericVector.cpp
+        src/customized/GenericVector.h
 )
 
 # Link against the Boost libraries
