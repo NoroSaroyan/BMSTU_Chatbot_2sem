@@ -1,19 +1,11 @@
-
 #include "UserServices.h"
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
-Utilities utils;
-Mapper mapper;
-
-void UserServices::registerAccount() {
+void UserServices::registerAccount(string username, string password) {
     User temp;
-    string username, password;
-    cout << endl;
-
-    cout << "Enter email" << endl;
-    cin >> username;
-    cout << endl;
     while (!utils.checkEmail(username)) {
         cout << "Email is invalid, try again: ";
         cin >> username;
@@ -30,37 +22,23 @@ void UserServices::registerAccount() {
         cout << endl;
     }
 
-    ifstream file("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/Database/users.txt", ios::in);
-    string line;
-    int count = 0;
-
-    if (file.is_open()) {
-        while (getline(file, line)) {
-            count++;
-        }
-        file.close();
-    }
-
     temp.setPassword(password);
     temp.setAuthority("USER");
-    temp.setId(to_string(count + 1));
+
+    boost::uuids::random_generator generator;
+    boost::uuids::uuid uuid = generator();
+    temp.setId(to_string(uuid));
 
     ofstream out("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/Database/users.txt", ios::app);
     if (out.is_open()) {
-        out << mapper.mapToString(temp) << "\n";;
+        out << mapper.mapToString(temp) << "\n";
     } else {
         cout << "Something went wrong" << endl;
     }
 }
 
-User UserServices::login() {
+optional<User> UserServices::login(string username, string password) {
     User currentUser;
-    string username, password;
-    cout << "Enter email" << endl;
-    cin >> username;
-    cout << endl;
-    cout << "Enter password" << endl;
-    cin >> password;
 
     ifstream file("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/Database/users.txt", ios::in);
     if (!file.is_open()) {
@@ -72,10 +50,11 @@ User UserServices::login() {
     while (getline(file, current)) {
         currentUser = mapper.mapToObject(current);
         if (currentUser.getUsername() == username && currentUser.getPassword() == password) {
+            AuthManager::getInstance().login(username, password, currentUser.getAuthority());
             return currentUser;
         }
     }
     file.close();
     cout << "User not found, try again" << endl;
-    return currentUser;
+    return nullopt;
 }

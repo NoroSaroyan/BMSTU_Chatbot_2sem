@@ -1,6 +1,6 @@
-#include "Mapper.h"
+#include "UserMapper.h"
 
-string Mapper::mapToString(User user) {
+string UserMapper::mapToString(User user) {
     return
             user.getId() + " " +
             user.getUsername() + " " +
@@ -8,7 +8,7 @@ string Mapper::mapToString(User user) {
             user.getAuthority();
 }
 
-User Mapper::mapToObject(std::string line) {
+User UserMapper::mapToObject(std::string line) {
     vector<std::string> values;
     string data;
 

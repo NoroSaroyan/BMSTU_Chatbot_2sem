@@ -1,23 +1,33 @@
 #include "Menu/Menu.h"
 #include "Menu/MenuItem.h"
-#include "User/UserServices.h"
+#include "service/user/UserServices.h"
+#include "AuthManager.h"
+#include "Entity/qa/QA.h"
 
 using namespace std;
 
+void authorizeUser(User user);
+
+void logoutUser();
+
 #pragma region функции-заглушки
 
-
-User global;
-
-
 int request();
+
 int loginFunction();
+
 int registration();
+
 int questions();
+
 int dataStoringGuide();
+
 int privacyPolicy();
+
 int main();
+
 UserServices service;
+
 int request() {
     int result = 1;
     int number, power;
@@ -28,55 +38,106 @@ int request() {
     for (int i = 0; i < power; i++) {
         result *= number;
     }
-    cout<<"\n"<<result<<endl;
+    cout << "\n" << result << endl;
     return 1;
 }
 
 int loginFunction() {
-    User temp = service.login();
-    if(temp.getUsername() != ""){
+    string username, password;
 
+    cout << "Enter username" << endl;
+    cin >> username;
+    cout << endl;
+
+    cout << "Enter password" << endl;
+    cin >> password;
+    cout << endl;
+
+    optional<User> temp = service.login(username, password);
+    if (temp.has_value()) {
+        authorizeUser(temp.value());
     }
     return 1;
 }
 
 int registration() {
-    cout << "REGISTRATION"<<endl;
-    service.registerAccount();
+    cout << "REGISTRATION" << endl;
+    string username, password;
+
+    cout << "Enter username" << endl;
+    cin >> username;
+    cout << endl;
+
+    cout << "Enter password" << endl;
+    cin >> password;
+    cout << endl;
+
+    service.registerAccount(username, password);
     return 2;
 }
 
 int questions() {
-    cout << "This will show you every question out bot can answer...\n\n";
+    vector<QA> list;
+    int idx = 1;
+    for (auto qa: list) {
+        cout << idx << ". " << qa.getQuestion() << endl;
+        idx++;
+    }
+    cout << endl;
     return 3;
 }
 
 int dataStoringGuide() {
     cout <<
-            "We take your safety close to heart, "
-            "\nso, we came up with the idea of multilayer encoding, "
-            "\nto ensure your private information and "
-            "\n4search history can't be read by anyone except you.\n\n";
+         "We take your safety close to heart, "
+         "\nso, we came up with the idea of multilayer encoding, "
+         "\nto ensure your private information and "
+         "\n4search history can't be read by anyone except you.\n\n";
     return 4;
 }
 
 int privacyPolicy() {
     cout <<
-            "Privacy policy is for telling you about basic rules and agreements between me and you."
-            "\n we'll get to this in a bit. \n\n";
+         "Privacy policy is for telling you about basic rules and agreements between me and you."
+         "\n we'll get to this in a bit. \n\n";
     return 5;
 }
+
 #pragma endregion
 
+void authorizeUser(User user) {
+    AuthManager &authManager = AuthManager::getInstance();
+    if (authManager.login(user.getUsername(), user.getPassword(), user.getAuthority())) {
+
+        std::shared_ptr<User> user = authManager.getCurrentUser();
+        std::cout << "User " << user->getUsername() << " has logged in with ID " << user->getId() << std::endl;
+    } else {
+        std::cerr << "Login failed for user " << user.getUsername() << std::endl;
+    }
+}
+
+void logoutUser() {
+    AuthManager &authManager = AuthManager::getInstance();
+    authManager.logout();
+    std::cout << "User has logged out." << std::endl;
+}
+
+
 const int ITEMS_NUMBER = 6;
+string username, password;
 
 
 int main() {
-    UserServices service;
+
+    std::shared_ptr<User> user = AuthManager::getInstance().getCurrentUser();
+    if (user) {
+        std::cout << "Current User: " << user->getUsername() << ", ID: " << user->getId() << std::endl;
+    }
+
     MenuItem items[ITEMS_NUMBER]{
-        MenuItem{"Request", request}, {"Login", loginFunction}, MenuItem{"Register", registration},
-        MenuItem{"Catalog", questions},
-        MenuItem{"How do we store data?", dataStoringGuide}, MenuItem{"Privacy policy", privacyPolicy}
+            MenuItem{"Request", request}, {"Login", loginFunction}, MenuItem{"Register", registration},
+            MenuItem{"Catalog", questions},
+            MenuItem{"How do we store data?", dataStoringGuide}, MenuItem{"Privacy policy", privacyPolicy}
     };
     Menu menu("My console menu", items, ITEMS_NUMBER);
     while (menu.runCommand()) {
@@ -84,3 +145,7 @@ int main() {
 
     return 0;
 }
+
+
+
+

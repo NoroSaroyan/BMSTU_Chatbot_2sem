@@ -1,21 +1,41 @@
-cmake_minimum_required(VERSION 3.27.8)
+cmake_minimum_required(VERSION 3.27.9)
 project(BMSTU_Chatbot_2sem)
 set(CMAKE_CXX_STANDARD 17)
-add_executable(BMSTU_Chatbot_2sem main.cpp
+
+# Set the Boost root directory to help CMake locate Boost
+set(Boost_ROOT "/usr/local/Cellar/boost")
+
+# Find Boost libraries, specifying the required components
+find_package(Boost 1.70.0 REQUIRED COMPONENTS system filesystem)
+
+# Include Boost directories
+include_directories(${Boost_INCLUDE_DIRS})
+
+# Add the executable with all source files and headers
+add_executable(BMSTU_Chatbot_2sem
+        main.cpp
         Menu/Menu.h
         Menu/MenuItem.h
-        Headers.h
-        Headers.h
         Menu/MenuItem.cpp
         Menu/Menu.cpp
-        User/User.h
-        Headers.h
-        User/User.cpp
+        Entity/user/User.h
+        Entity/user/User.cpp
         Encoder.cpp
-        User/UserServices.cpp
+        service/user/UserServices.cpp
+        service/user/UserServices.h
         Utils/Utilities.cpp
-        Utils/Mapper.cpp
-        User/UserServices.h
-        Utils/Mapper.h
-        Utils/Utilities.h)
+        Utils/user/UserMapper.cpp
+        Utils/Utilities.h
+        Utils/user/UserMapper.h
+        Entity/qa/QA.cpp
+        Entity/qa/QA.h
+        AuthManager.cpp
+        AuthManager.h
+        Utils/qa/QAMapper.cpp
+        Utils/qa/QAMapper.h
+        service/qa/QAService.cpp
+        service/qa/QAService.h
+)
 
+# Link against the Boost libraries
+target_link_libraries(BMSTU_Chatbot_2sem ${Boost_LIBRARIES})
