@@ -41,7 +41,7 @@ add_executable(BMSTU_Chatbot_2sem
         src/Entity/history/History.h
         src/helpers/mappers/history/HistoryMapper.cpp
         src/helpers/mappers/history/HistoryMapper.h
-        src/customized/GenericVector.h
+        src/customized/MyGenericVector.h
         src/Entity/parent/Client.h
         src/service/BaseService.h
 )

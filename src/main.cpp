@@ -3,7 +3,7 @@
 #include "service/user/UserService.h"
 #include "service/qa/QAService.h"
 #include "auth/AuthManager.h"
-#include "customized/GenericVector.h"
+#include "customized/MyGenericVector.h"
 #include "Entity/qa/QA.h"
 
 using namespace std;
@@ -189,7 +189,7 @@ int main() {
     // while (menu.runCommand()) {
     // };
 
-    GenericVector<User> users;
+    MyGenericVector<User> users;
     users.push_back(User("john_doe", "password123", "ADMIN"));
     users.push_back(User("jane_smith", "securepass", "USER"));
 
