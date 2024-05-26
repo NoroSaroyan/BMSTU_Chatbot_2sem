@@ -1,26 +1,26 @@
-//
-// Created by Norik Saroyan on 05.03.24.
-//
-
 #ifndef BMSTU_CHATBOT_2SEM_USERSERVICE_H
 #define BMSTU_CHATBOT_2SEM_USERSERVICE_H
 
 #include "../../Entity/user/User.h"
 #include "../../helpers/utils/Utilities.h"
 #include "../../helpers/mappers/user/UserMapper.h"
-#include "fstream"
-#include "iostream"
 #include "../../auth/AuthManager.h"
+#include "../BaseService.h"
+#include <fstream>
+#include <iostream>
+#include <optional>
 
-class UserService {
+class UserService : public BaseService {
 private:
-    string path = "/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/static/Database/users.txt";
     Utilities utils;
     UserMapper mapper;
-public :
-    void registerAccount(string username, string password);
 
-    optional<User> login(string username, string password);
+public:
+    UserService();
+
+    void registerAccount(const std::string &username, const std::string &password);
+
+    std::optional<User> login(const std::string &username, const std::string &password);
 };
 
-#endif //BMSTU_CHATBOT_2SEM_USERSERVICE_H
+#endif // BMSTU_CHATBOT_2SEM_USERSERVICE_H

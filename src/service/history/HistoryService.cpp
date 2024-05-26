@@ -1,15 +1,17 @@
+
 #include "HistoryService.h"
 
-string HistoryService::createRecord(string userId, QA qa, time_t time) {
+std::string HistoryService::createRecord(const std::string &userId, const QA &qa, time_t time) {
     History temp(userId, qa, time);
     auto result = historyMapper.mapToString(temp);
     postRecord(userId, result);
+    return result;
 }
 
-void HistoryService::postRecord(string userId, string record) {
-    ofstream out(pathPrefix + userId);
+void HistoryService::postRecord(const std::string &userId, const std::string &record) {
+    std::ofstream out(path + userId);
     if (!out.is_open()) {
-        cerr << "Database error";
+        std::cerr << "Database error" << std::endl;
     }
-    out << record << endl;
+    out << record << std::endl;
 }

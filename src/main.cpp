@@ -3,6 +3,7 @@
 #include "service/user/UserService.h"
 #include "service/qa/QAService.h"
 #include "auth/AuthManager.h"
+#include "customized/GenericVector.h"
 #include "Entity/qa/QA.h"
 
 using namespace std;
@@ -25,6 +26,8 @@ int questions();
 int dataStoringGuide();
 
 int privacyPolicy();
+
+void lab3Sort();
 
 int main();
 
@@ -80,9 +83,8 @@ int registration() {
 }
 
 int questions() {
-
     QAService qaService;
-    optional<vector<QA>> opt = qaService.getAll();
+    optional<vector<QA> > opt = qaService.getAll();
     vector<QA> list = opt.has_value() ? opt.value() : std::vector<QA>();
     int idx = 1;
     for (auto qa: list) {
@@ -99,10 +101,10 @@ int dataStoringGuide() {
     cout << temp->getId();
 
     cout <<
-         "We take your safety close to heart, "
-         "\nso, we came up with the idea of multilayer encoding, "
-         "\nto ensure your private information and "
-         "\n4search history can't be read by anyone except you.\n\n";
+            "We take your safety close to heart, "
+            "\nso, we came up with the idea of multilayer encoding, "
+            "\nto ensure your private information and "
+            "\n4search history can't be read by anyone except you.\n\n";
     return 4;
 }
 
@@ -112,9 +114,40 @@ int privacyPolicy() {
     cout << temp->getId();
 
     cout <<
-         "Privacy policy is for telling you about basic rules and agreements between me and you."
-         "\n we'll get to this in a bit. \n\n";
+            "Privacy policy is for telling you about basic rules and agreements between me and you."
+            "\n we'll get to this in a bit. \n\n";
     return 5;
+}
+
+void lab3Sort() {
+    UserMapper um;
+    vector<string> strUsers{
+        "3d24b878-9b7d-4ae8-886b-e75945405a8e noriksaroyan@gmail.com Noro$2004 USER",
+        "7c145b0a-2e8b-48db-a105-556e2f73093b User1@gmail.com User1$pswrd USER",
+        "50693932-99ed-4496-bb9f-9b57223e0125 user2@gmail.com User2$pswrd USER",
+        "c84c49e8-2f02-43a0-90d5-bad89dddd174 user3@gmail.com User3$pswrd USER",
+        "35577aec-a430-4e43-87a1-a5de3f398069 User4@gmail.com User4$Pswrd USER",
+    };
+    vector<User> users;
+    for (const auto &strUser: strUsers) {
+        users.push_back(um.mapToObject(strUser));
+    }
+    cout << "ORIGINAL" << endl;
+    for (const auto &user: users) {
+        cout << user << endl;
+    }
+
+    for (int i = 0; i < users.size() - 1; ++i) {
+        if (users[i] > users[i + 1]) {
+            auto temp = users[i];
+            users[i] = users[i + 1];
+            users[i + 1] = temp;
+        }
+    }
+    cout << "SORTED" << endl;
+    for (const auto &user: users) {
+        cout << user << endl;
+    }
 }
 
 #pragma endregion
@@ -135,30 +168,35 @@ void logoutUser() {
     std::cout << "User has logged out." << std::endl;
 }
 
-
 const int ITEMS_NUMBER = 6;
 string username, password;
 
 
 int main() {
+    // lab3Sort();
+    //
+    // std::shared_ptr<User> user = AuthManager::getInstance().getCurrentUser();
+    // if (user) {
+    //     std::cout << "Current User: " << user->getUsername() << ", ID: " << user->getId() << std::endl;
+    // }
+    //
+    // MenuItem items[ITEMS_NUMBER]{
+    //     MenuItem{"Request", request}, {"Login", loginFunction}, MenuItem{"Register", registration},
+    //     MenuItem{"Catalog", questions},
+    //     MenuItem{"How do we store data?", dataStoringGuide}, MenuItem{"Privacy policy", privacyPolicy}
+    // };
+    // Menu menu("My console menu", items, ITEMS_NUMBER);
+    // while (menu.runCommand()) {
+    // };
 
-    std::shared_ptr<User> user = AuthManager::getInstance().getCurrentUser();
-    if (user) {
-        std::cout << "Current User: " << user->getUsername() << ", ID: " << user->getId() << std::endl;
+    GenericVector<User> users;
+    users.push_back(User("john_doe", "password123", "ADMIN"));
+    users.push_back(User("jane_smith", "securepass", "USER"));
+
+    std::cout << "User details:" << std::endl;
+    for (size_t i = 0; i < users.getSize(); ++i) {
+        std::cout << users[i] << std::endl;
     }
-
-    MenuItem items[ITEMS_NUMBER]{
-            MenuItem{"Request", request}, {"Login", loginFunction}, MenuItem{"Register", registration},
-            MenuItem{"Catalog", questions},
-            MenuItem{"How do we store data?", dataStoringGuide}, MenuItem{"Privacy policy", privacyPolicy}
-    };
-    Menu menu("My console menu", items, ITEMS_NUMBER);
-    while (menu.runCommand()) {
-    };
 
     return 0;
 }
-
-
-
-

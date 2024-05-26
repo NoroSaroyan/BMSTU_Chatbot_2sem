@@ -17,7 +17,6 @@ public:
         return instance;
     }
 
-    // Delete copy constructor and assignment operator to prevent copies
     AuthManager(const AuthManager&) = delete;
     AuthManager& operator=(const AuthManager&) = delete;
 

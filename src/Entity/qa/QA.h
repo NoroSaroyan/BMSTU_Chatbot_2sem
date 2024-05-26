@@ -9,9 +9,10 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <ostream>
 
 class QA {
-private:
+protected:
     string id;
     string question;
     string answer;
@@ -42,6 +43,17 @@ public:
     string getAnswer() {
         return this->answer;
     }
+    friend istream &operator>>(istream &in, const QA &qa);
+
+    friend ostream &operator<<(ostream &os, const QA &qa);
+
+    bool operator<(const QA &rhs) const;
+
+    bool operator>(const QA &rhs) const;
+
+    bool operator<=(const QA &rhs) const;
+
+    bool operator>=(const QA &rhs) const;
 };
 
 #endif //BMSTU_CHATBOT_2SEM_QA_H

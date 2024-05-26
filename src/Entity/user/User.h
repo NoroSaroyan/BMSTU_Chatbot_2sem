@@ -2,39 +2,52 @@
 #define USER_H
 
 #include "../../../Headers.h"
+#include "../parent/Client.h"
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <iostream>
+#include <ostream>
+#include <utility>
 
-class User {
+class User : public Client {
 public:
-
-    User(const string &username, const string &password, const string &authority);
+    User(const std::string &username, const std::string &password, const std::string &authority);
 
     User();
 
-    string getUsername();
+    std::string getUsername() const;
 
-    string getPassword();
+    std::string getPassword() const;
 
-    string getId();
+    std::string getAuthority() const;
 
-    string getAuthority();
+    void setUsername(const std::string &username);
 
-    void setUsername(const string &username);
+    void setPassword(const std::string &password);
 
-    void setPassword(const string &password);
+    void setAuthority(std::string authority);
 
-    void setAuthority(string authority);
+    bool operator<(const User &rhs) const;
 
-    void setId(string id);
+    bool operator>(const User &rhs) const;
 
-private:
-    string username;
-    string password;
-    string authority;
-    string id;
+    bool operator<=(const User &rhs) const;
+
+    bool operator>=(const User &rhs) const;
+
+    friend std::istream &operator>>(std::istream &in, User &user);
+
+    friend std::ostream &operator<<(std::ostream &os, const User &user);
+
+    std::string toString() const override;
+
+    std::size_t hash() const override;
+
+protected:
+    std::string username;
+    std::string password;
+    std::string authority;
 };
 
-
-#endif //USER_H
+#endif // USER_H
