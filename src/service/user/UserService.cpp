@@ -1,6 +1,8 @@
 #include "UserService.h"
+#include "../../exception/service/ServiceConnectionException.h"
 
-UserService::UserService() : BaseService("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/static/Database/users.txt") {}
+// UserService::UserService() : BaseService("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/static/Database/users.txt") {}
+UserService::UserService() : BaseService("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/Database/users.txt") {}
 
 void UserService::registerAccount(const std::string &username, const std::string &password) {
     User temp;
@@ -30,33 +32,41 @@ void UserService::registerAccount(const std::string &username, const std::string
     boost::uuids::uuid uuid = generator();
     temp.setId(boost::uuids::to_string(uuid));
 
-    std::ofstream out = openOutputFile();
-    if (out.is_open()) {
-        out << mapper.mapToString(temp) << "\n";
-    } else {
-        std::cout << "Something went wrong" << std::endl;
+    try {
+        std::ofstream out = openOutputFile();
+        if (out.is_open()) {
+            out << mapper.mapToString(temp) << "\n";
+        } else {
+            throw ServiceConnectionException("Unable to access database for writing");
+        }
+    } catch (const ServiceConnectionException& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
     }
 }
 
 std::optional<User> UserService::login(const std::string &username, const std::string &password) {
     User currentUser;
 
-    std::ifstream file = openInputFile();
-    if (!file.is_open()) {
-        std::cout << "Internal server error, couldn't access database" << std::endl;
+    try {
+        std::ifstream file = openInputFile();
+        if (!file.is_open()) {
+            throw ServiceConnectionException("Unable to access database for reading");
+        }
+
+        std::string current;
+
+        while (std::getline(file, current)) {
+            currentUser = mapper.mapToObject(current);
+            if (currentUser.getUsername() == username && currentUser.getPassword() == password) {
+                AuthManager::getInstance().login(username, password, currentUser.getAuthority());
+                return currentUser;
+            }
+        }
+        file.close();
+        std::cout << "User not found, try again" << std::endl;
+        return std::nullopt;
+    } catch (const ServiceConnectionException& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
         return std::nullopt;
     }
-
-    std::string current;
-
-    while (std::getline(file, current)) {
-        currentUser = mapper.mapToObject(current);
-        if (currentUser.getUsername() == username && currentUser.getPassword() == password) {
-            AuthManager::getInstance().login(username, password, currentUser.getAuthority());
-            return currentUser;
-        }
-    }
-    file.close();
-    std::cout << "User not found, try again" << std::endl;
-    return std::nullopt;
 }

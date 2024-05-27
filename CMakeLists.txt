@@ -44,6 +44,9 @@ add_executable(BMSTU_Chatbot_2sem
         src/customized/MyGenericVector.h
         src/Entity/parent/Client.h
         src/service/BaseService.h
+        src/exception/service/ServiceConnectionException.h
+        src/exception/service/ServiceDataException.h
+        src/exception/service/QANotFoundException.h
 )
 
 # Link against the Boost libraries

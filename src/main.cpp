@@ -173,30 +173,21 @@ string username, password;
 
 
 int main() {
-    // lab3Sort();
-    //
-    // std::shared_ptr<User> user = AuthManager::getInstance().getCurrentUser();
-    // if (user) {
-    //     std::cout << "Current User: " << user->getUsername() << ", ID: " << user->getId() << std::endl;
-    // }
-    //
-    // MenuItem items[ITEMS_NUMBER]{
-    //     MenuItem{"Request", request}, {"Login", loginFunction}, MenuItem{"Register", registration},
-    //     MenuItem{"Catalog", questions},
-    //     MenuItem{"How do we store data?", dataStoringGuide}, MenuItem{"Privacy policy", privacyPolicy}
-    // };
-    // Menu menu("My console menu", items, ITEMS_NUMBER);
-    // while (menu.runCommand()) {
-    // };
+    lab3Sort();
 
-    MyGenericVector<User> users;
-    users.push_back(User("john_doe", "password123", "ADMIN"));
-    users.push_back(User("jane_smith", "securepass", "USER"));
-
-    std::cout << "User details:" << std::endl;
-    for (size_t i = 0; i < users.getSize(); ++i) {
-        std::cout << users[i] << std::endl;
+    std::shared_ptr<User> user = AuthManager::getInstance().getCurrentUser();
+    if (user) {
+        std::cout << "Current User: " << user->getUsername() << ", ID: " << user->getId() << std::endl;
     }
+
+    MenuItem items[ITEMS_NUMBER]{
+        MenuItem{"Request", request}, {"Login", loginFunction}, MenuItem{"Register", registration},
+        MenuItem{"Catalog", questions},
+        MenuItem{"How do we store data?", dataStoringGuide}, MenuItem{"Privacy policy", privacyPolicy}
+    };
+    Menu menu("My console menu", items, ITEMS_NUMBER);
+    while (menu.runCommand()) {
+    };
 
     return 0;
 }

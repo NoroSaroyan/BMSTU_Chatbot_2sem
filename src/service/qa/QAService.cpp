@@ -1,6 +1,7 @@
 #include "QAService.h"
+#include "../../exception/service/QANotFoundException.h"
 
-std::optional<MyGenericVector<QA>> QAService::getAll() {
+std::optional<MyGenericVector<QA> > QAService::getAll() {
     std::ifstream inFile = openInputFile();
     if (!inFile) {
         return std::nullopt;
@@ -16,16 +17,18 @@ std::optional<MyGenericVector<QA>> QAService::getAll() {
     inFile.close();
     return readQuestions;
 }
-optional<QA> QAService::getById(const std::string &id) {
-    ifstream inFile = openInputFile();
+
+std::optional<QA> QAService::getById(const std::string &id) {
+    std::ifstream inFile = openInputFile();
     if (inFile) {
         std::string line;
-        while (getline(inFile, line)) {
+        while (std::getline(inFile, line)) {
             QA qa = mapper.mapToObject(line);
             if (qa.getId() == id) {
                 return qa;
             }
         }
     }
-    return std::nullopt;
+
+    throw QANotFoundException(id);
 }
