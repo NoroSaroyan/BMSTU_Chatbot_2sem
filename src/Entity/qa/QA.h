@@ -20,6 +20,9 @@ protected:
 public:
     QA(const string &question, const string &answer);
 
+    QA() : question(""), answer("") {
+    }
+
     void setId(string id) {
         this->id = id;
     }
@@ -43,6 +46,7 @@ public:
     string getAnswer() {
         return this->answer;
     }
+
     friend istream &operator>>(istream &in, const QA &qa);
 
     friend ostream &operator<<(ostream &os, const QA &qa);

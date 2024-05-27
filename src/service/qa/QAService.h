@@ -8,14 +8,17 @@
 #include <optional>
 #include <vector>
 
+#include "../../customized/MyGenericVector.h"
+
 class QAService : public BaseService {
 private:
     QAMapper mapper;
 
 public:
-    QAService() : BaseService("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/static/Database/QA.txt") {}
+    QAService() : BaseService("/Users/noriksaroyan/CLionProjects/BMSTU-Chatbot-2sem/static/Database/QA.txt") {
+    }
 
-    std::optional<std::vector<QA>> getAll();
+    optional<MyGenericVector<QA>> getAll();
 
     std::optional<QA> getById(const std::string &id);
 };

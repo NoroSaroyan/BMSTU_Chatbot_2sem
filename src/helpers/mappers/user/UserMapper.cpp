@@ -1,5 +1,7 @@
 #include "UserMapper.h"
 
+#include "../../../customized/MyGenericVector.h"
+
 string UserMapper::mapToString(User user) {
     return
             user.getId() + " " +
@@ -9,10 +11,10 @@ string UserMapper::mapToString(User user) {
 }
 
 User UserMapper::mapToObject(std::string line) {
-    vector<std::string> values;
+    MyGenericVector<std::string> values;
     string data;
 
-    for (char c : line) {
+    for (char c: line) {
         if (c != ' ') {
             data += c;
         } else {
@@ -24,7 +26,7 @@ User UserMapper::mapToObject(std::string line) {
     values.push_back(data);
 
     User temp;
-    if (values.size() >= 4) {
+    if (values.getSize() >= 4) {
         temp.setId(values[0]);
         temp.setUsername(values[1]);
         temp.setPassword(values[2]);

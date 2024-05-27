@@ -84,8 +84,8 @@ int registration() {
 
 int questions() {
     QAService qaService;
-    optional<vector<QA> > opt = qaService.getAll();
-    vector<QA> list = opt.has_value() ? opt.value() : std::vector<QA>();
+    optional<MyGenericVector<QA> > opt = qaService.getAll();
+    MyGenericVector<QA> list = opt.has_value() ? opt.value() : MyGenericVector<QA>();
     int idx = 1;
     for (auto qa: list) {
         cout << idx << ". " << qa.getQuestion() << endl;

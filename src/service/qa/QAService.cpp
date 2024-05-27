@@ -1,12 +1,12 @@
 #include "QAService.h"
 
-std::optional<std::vector<QA> > QAService::getAll() {
+std::optional<MyGenericVector<QA>> QAService::getAll() {
     std::ifstream inFile = openInputFile();
     if (!inFile) {
         return std::nullopt;
     }
 
-    std::vector<QA> readQuestions;
+    MyGenericVector<QA> readQuestions;
     std::string line;
     while (std::getline(inFile, line)) {
         QA qa = mapper.mapToObject(line);
@@ -16,12 +16,11 @@ std::optional<std::vector<QA> > QAService::getAll() {
     inFile.close();
     return readQuestions;
 }
-
-std::optional<QA> QAService::getById(const std::string &id) {
-    std::ifstream inFile = openInputFile();
+optional<QA> QAService::getById(const std::string &id) {
+    ifstream inFile = openInputFile();
     if (inFile) {
         std::string line;
-        while (std::getline(inFile, line)) {
+        while (getline(inFile, line)) {
             QA qa = mapper.mapToObject(line);
             if (qa.getId() == id) {
                 return qa;
